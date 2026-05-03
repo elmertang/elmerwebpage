@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="ETH.png" />
+    <title>Elmer Tang</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- ░░ NAVIGATION ░░ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <img src="ETH.png" alt="ETH Logo" class="nav-logo-img" />
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact" class="nav-cta">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ░░ HERO ░░ -->
+    <section class="hero" id="home">
+        <div class="hero-grid-bg"></div>
+        <div class="hero-inner">
+            <div class="hero-text">
+                <p class="hero-eyebrow"><span class="dot"></span> Information &amp; Communication Technology</p>
+                <h1 class="hero-title">
+                    IT <span class="accent">Professional</span><br />
+                    &amp; Network<br />
+                    <span class="accent">Specialist</span>
+                </h1>
+                <p class="hero-desc">
+                    IT professional with a background in system engineering, IT support, and project management,
+                    bringing a strong foundation in troubleshooting, operations, and stakeholder coordination.
+                    Currently transitioning into a networking-focused role, with hands-on lab practice and ongoing
+                    CCNA and AWS certifications. Building expertise in network implementation and support.
+                </p>
+            </div>
+            <div class="hero-avatar">
+                <div class="avatar-ring">
+                    <div class="avatar-placeholder">
+                        <<img src="profile.jpg" alt="Profile Photo" class="avatar-img" />
+                    </div>
+                </div>
+                <div class="avatar-badge">Open to Work</div>
+            </div>
+        </div>
+        <div class="hero-scan-line"></div>
+    </section>
+
+    <!-- ░░ ABOUT ░░ -->
+    <section class="about section" id="about">
+        <div class="container">
+            <h2 class="section-title">About <span class="accent">Me</span></h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I'm an IT professional with experience in system engineering, IT support, and project management,
+                        giving me a strong foundation in both technical work and coordination. I enjoy problem-solving and
+                        continuously learning new skills, which has led me to transition into a networking-focused career.
+                    </p>
+                    <p>
+                        I'm currently building hands-on lab experience using virtual machines while studying for the CCNA
+                        and AWS certifications. My goal is to grow into a network engineer capable of designing, managing,
+                        and troubleshooting reliable network systems.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <span class="stat-num accent">3+</span>
+                        <span class="stat-label">Years IT Experience</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num accent">10++</span>
+                        <span class="stat-label">IT &amp; Automation Tools</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num accent">50+</span>
+                        <span class="stat-label">Issues Resolved</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num accent">2</span>
+                        <span class="stat-label">Networking Journey</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ░░ PROJECTS ░░ -->
+    <section class="projects section" id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">All Projects <span class="filter-count">5</span></button>
+                <button class="filter-btn" data-filter="technical">Technical Project <span class="filter-count">3</span></button>
+                <button class="filter-btn" data-filter="digital">Digital Project <span class="filter-count">2</span></button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+
+                <div class="project-card" data-category="digital">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-blue)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-blue)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-blue)" /></svg>
+                    </div>
+                    <div class="card-tag">F&amp;B Digital Menu Ordering System</div>
+                    <h3 class="card-title">Digital Menu Ordering System</h3>
+                    <p class="card-desc">Developed an interactive ordering platform to streamline menu browsing and ordering processes for F&amp;B operations.</p>
+                    <div class="card-chips">
+                        <span class="chip">UI / UX</span>
+                        <span class="chip">Web App</span>
+                        <span class="chip">Ordering System</span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">View Details →</a>
+                        <span class="badge badge-done">Completed</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="technical">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-green)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-green)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-green)" /></svg>
+                    </div>
+                    <div class="card-tag">Oximeter (BPM &amp; SpO₂ Device)</div>
+                    <h3 class="card-title">Oximeter Monitoring Device</h3>
+                    <p class="card-desc">Built a hardware-based solution to measure real-time heart rate (BPM) and blood oxygen (SpO₂) levels.</p>
+                    <div class="card-chips">
+                        <span class="chip">IoT</span>
+                        <span class="chip">Embedded System</span>
+                        <span class="chip">Sensors</span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">View Details →</a>
+                        <span class="badge badge-done">Completed</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="digital">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-blue)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-blue)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-blue)" /></svg>
+                    </div>
+                    <div class="card-tag">Travel App to Malaysia (JP Users)</div>
+                    <h3 class="card-title">Malaysia Travel Guide App</h3>
+                    <p class="card-desc">Created a localised travel application to help Japanese users navigate Malaysia with ease and confidence.</p>
+                    <div class="card-chips">
+                        <span class="chip">Mobile App</span>
+                        <span class="chip">UX Design</span>
+                        <span class="chip">Travel Tech</span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">View Details →</a>
+                        <span class="badge badge-wip">In Progress</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="technical">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-green)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-green)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-green)" /></svg>
+                    </div>
+                    <div class="card-tag">Networking Lab Environment</div>
+                    <h3 class="card-title">Virtual Network Lab Setup</h3>
+                    <p class="card-desc">Designed and built virtual lab environments to practise network configuration, troubleshooting, and CCNA-level concepts.</p>
+                    <div class="card-chips">
+                        <span class="chip">Networking</span>
+                        <span class="chip">Virtualisation</span>
+                        <span class="chip">Lab Environment</span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">View Details →</a>
+                        <span class="badge badge-wip">In Progress</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="technical">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-green)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-green)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-green)" /></svg>
+                    </div>
+                    <div class="card-tag">AI Video Content Creation</div>
+                    <h3 class="card-title">AI-Powered Video Content</h3>
+                    <p class="card-desc">Produced short-form AI-assisted videos for marketing and digital content engagement.</p>
+                    <div class="card-chips">
+                        <span class="chip">AI Tools</span>
+                        <span class="chip">Content Creation</span>
+                        <span class="chip">Marketing</span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">View Details →</a>
+                        <span class="badge badge-wip">In Progress</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ░░ SKILLS ░░ -->
+    <section class="skills section" id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical <span class="accent">Skills</span></h2>
+
+            <div class="skills-grid">
+
+                <div class="skill-card">
+                    <div class="skill-icon">📡</div>
+                    <h2>Monitoring &amp; Performance</h2>
+                    <p>Tracking system performance, identifying bottlenecks, and ensuring stable and efficient IT operations.</p>
+                    <div class="proficiency-bar">
+                        <span class="proficiency-label">PROFICIENCY</span>
+                        <div class="bar-track"><div class="bar-fill" style="--pct:72%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h2>Networking Fundamentals</h2>
+                    <p>Understanding core networking concepts including TCP/IP, subnetting, VLANs, and basic network troubleshooting.</p>
+                    <div class="proficiency-bar">
+                        <span class="proficiency-label">PROFICIENCY</span>
+                        <div class="bar-track"><div class="bar-fill" style="--pct:65%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">☁️</div>
+                    <h2>Cloud &amp; Virtualisation</h2>
+                    <p>Hands-on experience with virtual machines, cloud computing platforms and infrastructure.</p>
+                    <div class="proficiency-bar">
+                        <span class="proficiency-label">PROFICIENCY</span>
+                        <div class="bar-track"><div class="bar-fill" style="--pct:60%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h2>AI &amp; Data Tools</h2>
+                    <p>Utilising AI tools and basic data analysis to enhance productivity and support decision-making.</p>
+                    <div class="proficiency-bar">
+                        <span class="proficiency-label">PROFICIENCY</span>
+                        <div class="bar-track"><div class="bar-fill" style="--pct:78%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">📄</div>
+                    <h2>Technical Documentation</h2>
+                    <p>Creating clear and structured documentation to support system processes, issue tracking, and knowledge sharing.</p>
+                    <div class="proficiency-bar">
+                        <span class="proficiency-label">PROFICIENCY</span>
+                        <div class="bar-track"><div class="bar-fill" style="--pct:80%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <h2>Troubleshooting &amp; Support</h2>
+                    <p>Diagnosing and resolving technical issues while ensuring smooth day-to-day system and endpoint operations.</p>
+                    <div class="proficiency-bar">
+                        <span class="proficiency-label">PROFICIENCY</span>
+                        <div class="bar-track"><div class="bar-fill" style="--pct:85%"></div></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tools-section">
+                <h3 class="tools-title">Key Technologies &amp; Tools</h3>
+                <div class="tools-list">
+                    <span class="tool-chip">Cisco Packet Tracer</span>
+                    <span class="tool-chip">HIK Connect</span>
+                    <span class="tool-chip">Linux (Ubuntu)</span>
+                    <span class="tool-chip">VMware / VirtualBox</span>
+                    <span class="tool-chip">Power BI</span>
+                    <span class="tool-chip">Windows Server</span>
+                    <span class="tool-chip">Arduino</span>
+                    <span class="tool-chip">ChatGPT &amp; AI Tools</span>
+                    <span class="tool-chip">Adobe</span>
+                    <span class="tool-chip">Visual Studio Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ░░ CONTACT ░░ -->
+    <section class="contact section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In <span class="accent">Touch</span></h2>
+            <p class="contact-sub">
+                I'm currently transitioning into a networking-focused role and open to opportunities
+                where I can contribute, learn, and grow.
+            </p>
+            <a href="Elmer_Resume_2026.pdf" download="Elmer_Resume_updated.pdf" class="btn btn-primary btn-lg">Download My Resume</a>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/elmer-tang-215961222/" target="_blank" class="contact-link">LinkedIn</a>
+                <a href="https://github.com/elmertang" target="_blank" class="contact-link">GitHub</a>
+                <a href="mailto:elmertang.27@gmail.com" class="contact-link">Email</a>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Elmer Tang. All rights reserved.</p>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
