@@ -39,15 +39,16 @@
             <div class="hero-text">
                 <p class="hero-eyebrow"><span class="dot"></span> Information &amp; Communication Technology</p>
                 <h1 class="hero-title">
-                    IT <span class="accent">Professional</span><br />
-                    &amp; Network<br />
-                    <span class="accent">Specialist</span>
+                    Elmer <span class="accent">Tang Huai</span>
                 </h1>
                 <p class="hero-desc">
-                    IT professional with a background in system engineering, IT support, and project management,
-                    bringing a strong foundation in troubleshooting, operations, and stakeholder coordination.
-                    Currently transitioning into a networking-focused role, with hands-on lab practice and ongoing
-                    CCNA and AWS certifications. Building expertise in network implementation and support.
+                    IT professional with a background in system engineering, IT support, and project management, 
+                    bringing strong expertise in troubleshooting, operations, and stakeholder coordination. 
+                    Currently transitioning into DevOps and networking roles, with hands-on lab experience and 
+                    ongoing CCNA and AWS certifications, focusing on network implementation and cloud-based solutions. 
+                    I leverage AI tools to accelerate development workflows, including web, multimedia, and 
+                    automation tasks, and continuously expand my skills through practical projects, with a goal to 
+                    build and deploy a mini game.
                 </p>
             </div>
             <div class="hero-avatar">
@@ -115,8 +116,8 @@
             <div class="projects-grid" id="projectsGrid">
 
                 <div class="project-card" data-category="digital">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-blue)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-blue)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-blue)" /></svg>
+                    <div>
+                        <img src="menu.png" alt="Digital Menu Icon" class="card-icon-img" />
                     </div>
                     <div class="card-tag">F&amp;B Digital Menu Ordering System</div>
                     <h3 class="card-title">Digital Menu Ordering System</h3>
@@ -133,8 +134,8 @@
                 </div>
 
                 <div class="project-card" data-category="technical">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-green)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-green)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-green)" /></svg>
+                    <div>
+                        <img src="oximeter.png" alt="Oximeter Icon" class="card-icon-img" />
                     </div>
                     <div class="card-tag">Oximeter (BPM &amp; SpO₂ Device)</div>
                     <h3 class="card-title">Oximeter Monitoring Device</h3>
@@ -151,8 +152,8 @@
                 </div>
 
                 <div class="project-card" data-category="digital">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-blue)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-blue)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-blue)" /></svg>
+                    <div>
+                        <img src="travel.png" alt="Travel App Icon" class="card-icon-img" />
                     </div>
                     <div class="card-tag">Travel App to Malaysia (JP Users)</div>
                     <h3 class="card-title">Malaysia Travel Guide App</h3>
@@ -169,8 +170,8 @@
                 </div>
 
                 <div class="project-card" data-category="technical">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-green)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-green)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-green)" /></svg>
+                    <div>
+                        <img src="network.png" alt="Network Lab Icon" class="card-icon-img" />
                     </div>
                     <div class="card-tag">Networking Lab Environment</div>
                     <h3 class="card-title">Virtual Network Lab Setup</h3>
@@ -187,8 +188,8 @@
                 </div>
 
                 <div class="project-card" data-category="technical">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="var(--accent-green)" stroke-width="1.5" /><path d="M13 20c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="var(--accent-green)" opacity=".3" /><circle cx="20" cy="20" r="4" fill="var(--accent-green)" /></svg>
+                    <div>
+                        <img src="ai.png" alt="AI Video Icon" class="card-icon-img" />
                     </div>
                     <div class="card-tag">AI Video Content Creation</div>
                     <h3 class="card-title">AI-Powered Video Content</h3>
@@ -207,6 +208,28 @@
             </div>
         </div>
     </section>
+
+    <!-- ░░ PROJECT MODAL ░░ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">✕</button>
+
+            <div class="modal-image-wrap">
+                <button class="modal-arrow" id="modalPrev">&#8249;</button>
+                <div class="modal-slides" id="modalSlides">
+                    <!-- images injected by JS -->
+                </div>
+                <button class="modal-arrow" id="modalNext">&#8250;</button>
+                <div class="modal-dots" id="modalDots"></div>
+            </div>
+
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-chips" id="modalChips"></div>
+                <p class="modal-desc" id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
 
     <!-- ░░ SKILLS ░░ -->
     <section class="skills section" id="skills">
