@@ -1,0 +1,1159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8-BIT MEMORY // ETH</title>
+    <link rel="icon" type="image/png" href="ETH.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet" />
+    <style>
+        /* ── TOKENS ── */
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #12121e;
+            --bg3: #1a1a2e;
+            --card-back: #16213e;
+            --card-front: #0f3460;
+            --pixel: #e94560;
+            --yellow: #f5a623;
+            --green: #39ff14;
+            --cyan: #00ffff;
+            --purple: #bf5fff;
+            --white: #f0f0f0;
+            --grey: #444466;
+            --font-main: 'Press Start 2P', monospace;
+            --font-score: 'VT323', monospace;
+            --shadow: 4px 4px 0px #000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            image-rendering: pixelated;
+        }
+
+            /* scanline overlay */
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background: repeating-linear-gradient( 0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px );
+                pointer-events: none;
+                z-index: 999;
+            }
+
+            /* pixel grid background */
+            body::after {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background-image: linear-gradient(rgba(233,69,96,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(233,69,96,0.03) 1px, transparent 1px);
+                background-size: 32px 32px;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        /* ── HEADER ── */
+        .header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 28px 20px 16px;
+            border-bottom: 4px solid var(--pixel);
+            background: var(--bg2);
+            box-shadow: 0 4px 0 #000;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto 16px;
+        }
+
+        .back-btn {
+            font-family: var(--font-main);
+            font-size: 0.55rem;
+            color: var(--cyan);
+            background: transparent;
+            border: 2px solid var(--cyan);
+            padding: 8px 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.1s;
+            box-shadow: 3px 3px 0 #000;
+        }
+
+            .back-btn:hover {
+                background: var(--cyan);
+                color: #000;
+                transform: translate(-2px, -2px);
+                box-shadow: 5px 5px 0 #000;
+            }
+
+        .game-title {
+            font-size: clamp(0.9rem, 3vw, 1.5rem);
+            color: var(--pixel);
+            text-shadow: 3px 3px 0 #7a0000, 0 0 20px rgba(233,69,96,0.5);
+            letter-spacing: 0.05em;
+            animation: titleFlicker 4s infinite;
+        }
+
+        @keyframes titleFlicker {
+            0%,95%,100% {
+                opacity: 1;
+            }
+
+            96% {
+                opacity: 0.6;
+            }
+
+            97% {
+                opacity: 1;
+            }
+
+            98% {
+                opacity: 0.4;
+            }
+        }
+
+        .header-spacer {
+            width: 100px;
+        }
+
+        /* ── SCOREBOARD ── */
+        .scoreboard {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: clamp(12px, 3vw, 40px);
+            flex-wrap: wrap;
+            padding: 16px 20px;
+            background: var(--bg3);
+            border-bottom: 3px solid var(--grey);
+        }
+
+        .score-box {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .score-label {
+            font-size: 0.45rem;
+            color: var(--grey);
+            display: block;
+            margin-bottom: 4px;
+            letter-spacing: 0.1em;
+        }
+
+        .score-value {
+            font-family: var(--font-score);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            color: var(--yellow);
+            text-shadow: 2px 2px 0 #7a5000;
+            line-height: 1;
+        }
+
+            .score-value.green {
+                color: var(--green);
+                text-shadow: 2px 2px 0 #1a7a00;
+            }
+
+            .score-value.cyan {
+                color: var(--cyan);
+                text-shadow: 2px 2px 0 #007a7a;
+            }
+
+            .score-value.purple {
+                color: var(--purple);
+                text-shadow: 2px 2px 0 #5a007a;
+            }
+
+        /* ── MAIN AREA ── */
+        .main {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 16px 48px;
+        }
+
+        /* ── DIFFICULTY SCREEN ── */
+        #diffScreen {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .diff-title {
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            color: var(--cyan);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #007a7a;
+        }
+
+        .diff-subtitle {
+            font-family: var(--font-score);
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            color: var(--grey);
+            margin-bottom: 40px;
+            letter-spacing: 0.05em;
+        }
+
+        .diff-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .diff-card {
+            background: var(--bg2);
+            border: 3px solid var(--grey);
+            padding: 28px 24px;
+            width: 220px;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 4px 4px 0 #000;
+            text-align: center;
+            position: relative;
+        }
+
+            .diff-card:hover {
+                transform: translate(-3px, -3px);
+                box-shadow: 7px 7px 0 #000;
+            }
+
+            .diff-card.easy:hover {
+                border-color: var(--green);
+            }
+
+            .diff-card.medium:hover {
+                border-color: var(--yellow);
+            }
+
+            .diff-card.hard:hover {
+                border-color: var(--pixel);
+            }
+
+            .diff-card .diff-icon {
+                font-size: 2.4rem;
+                display: block;
+                margin-bottom: 16px;
+            }
+
+            .diff-card .diff-name {
+                font-size: 0.65rem;
+                margin-bottom: 10px;
+                letter-spacing: 0.1em;
+            }
+
+            .diff-card.easy .diff-name {
+                color: var(--green);
+            }
+
+            .diff-card.medium .diff-name {
+                color: var(--yellow);
+            }
+
+            .diff-card.hard .diff-name {
+                color: var(--pixel);
+            }
+
+            .diff-card .diff-info {
+                font-family: var(--font-score);
+                font-size: 1.1rem;
+                color: var(--grey);
+                line-height: 1.6;
+            }
+
+            .diff-card .diff-badge {
+                position: absolute;
+                top: -12px;
+                right: -12px;
+                background: var(--pixel);
+                color: #fff;
+                font-size: 0.4rem;
+                padding: 4px 8px;
+                box-shadow: 2px 2px 0 #000;
+            }
+
+        .pixel-art-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+
+        /* ── GAME SCREEN ── */
+        #gameScreen {
+            display: none;
+        }
+
+        .game-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .diff-indicator {
+            font-size: 0.5rem;
+            padding: 6px 14px;
+            border: 2px solid var(--grey);
+            color: var(--grey);
+            letter-spacing: 0.1em;
+        }
+
+            .diff-indicator.easy {
+                border-color: var(--green);
+                color: var(--green);
+            }
+
+            .diff-indicator.medium {
+                border-color: var(--yellow);
+                color: var(--yellow);
+            }
+
+            .diff-indicator.hard {
+                border-color: var(--pixel);
+                color: var(--pixel);
+            }
+
+        .game-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pixel-btn {
+            font-family: var(--font-main);
+            font-size: 0.45rem;
+            padding: 8px 14px;
+            cursor: pointer;
+            border: 2px solid;
+            box-shadow: 3px 3px 0 #000;
+            transition: all 0.1s;
+            letter-spacing: 0.05em;
+        }
+
+            .pixel-btn:hover {
+                transform: translate(-2px, -2px);
+                box-shadow: 5px 5px 0 #000;
+            }
+
+            .pixel-btn.red {
+                color: var(--pixel);
+                border-color: var(--pixel);
+                background: transparent;
+            }
+
+                .pixel-btn.red:hover {
+                    background: var(--pixel);
+                    color: #000;
+                }
+
+            .pixel-btn.grey {
+                color: var(--grey);
+                border-color: var(--grey);
+                background: transparent;
+            }
+
+                .pixel-btn.grey:hover {
+                    background: var(--grey);
+                    color: #000;
+                }
+
+        /* ── CARD GRID ── */
+        .card-grid {
+            display: grid;
+            gap: clamp(6px, 1.5vw, 12px);
+            justify-content: center;
+            margin: 0 auto;
+        }
+        /* columns set by JS via style */
+
+        .card {
+            aspect-ratio: 1;
+            width: 100%;
+            cursor: pointer;
+            perspective: 600px;
+            max-width: 110px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .card.flipped .card-inner,
+        .card.matched .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid;
+            box-shadow: 4px 4px 0 #000;
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            user-select: none;
+        }
+
+        .card-back {
+            background: var(--card-back);
+            border-color: var(--grey);
+            font-size: clamp(1rem, 3vw, 1.6rem);
+            color: var(--grey);
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-back-pattern {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 3px;
+            opacity: 0.4;
+        }
+
+            .card-back-pattern span {
+                width: clamp(6px,1.2vw,10px);
+                height: clamp(6px,1.2vw,10px);
+                background: var(--pixel);
+                display: block;
+            }
+
+                .card-back-pattern span:nth-child(2n) {
+                    background: var(--yellow);
+                }
+
+                .card-back-pattern span:nth-child(3n) {
+                    background: var(--cyan);
+                }
+
+        .card-front {
+            background: var(--card-front);
+            border-color: var(--cyan);
+            transform: rotateY(180deg);
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card.matched .card-face.card-front {
+            background: #0a2a0a;
+            border-color: var(--green);
+            box-shadow: 4px 4px 0 #000, 0 0 12px rgba(57,255,20,0.4);
+        }
+
+        .card-label {
+            font-family: var(--font-score);
+            font-size: clamp(0.55rem, 1.5vw, 0.75rem);
+            color: var(--cyan);
+            letter-spacing: 0.05em;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .card.matched .card-label {
+            color: var(--green);
+        }
+
+        /* ── WIN SCREEN ── */
+        #winScreen {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .win-title {
+            font-size: clamp(1rem, 3.5vw, 1.8rem);
+            color: var(--yellow);
+            text-shadow: 4px 4px 0 #7a5000, 0 0 30px rgba(245,166,35,0.6);
+            margin-bottom: 8px;
+            animation: winPulse 0.8s infinite alternate;
+        }
+
+        @keyframes winPulse {
+            from {
+                text-shadow: 4px 4px 0 #7a5000, 0 0 20px rgba(245,166,35,0.4);
+            }
+
+            to {
+                text-shadow: 4px 4px 0 #7a5000, 0 0 40px rgba(245,166,35,0.9);
+            }
+        }
+
+        .win-sub {
+            font-family: var(--font-score);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--grey);
+            margin-bottom: 36px;
+        }
+
+        .win-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .win-stat {
+            background: var(--bg2);
+            border: 3px solid var(--grey);
+            padding: 20px 28px;
+            box-shadow: 4px 4px 0 #000;
+            min-width: 120px;
+        }
+
+        .win-stat-val {
+            font-family: var(--font-score);
+            font-size: 2.4rem;
+            color: var(--yellow);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .win-stat-lbl {
+            font-size: 0.42rem;
+            color: var(--grey);
+            letter-spacing: 0.1em;
+        }
+
+        .win-stars {
+            font-size: 2rem;
+            margin-bottom: 32px;
+            letter-spacing: 8px;
+        }
+
+        .win-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pixel-btn-lg {
+            font-family: var(--font-main);
+            font-size: 0.55rem;
+            padding: 14px 24px;
+            cursor: pointer;
+            border: 3px solid;
+            box-shadow: 5px 5px 0 #000;
+            transition: all 0.1s;
+            letter-spacing: 0.05em;
+        }
+
+            .pixel-btn-lg:hover {
+                transform: translate(-3px, -3px);
+                box-shadow: 8px 8px 0 #000;
+            }
+
+            .pixel-btn-lg.green {
+                color: var(--green);
+                border-color: var(--green);
+                background: transparent;
+            }
+
+                .pixel-btn-lg.green:hover {
+                    background: var(--green);
+                    color: #000;
+                }
+
+            .pixel-btn-lg.yellow {
+                color: var(--yellow);
+                border-color: var(--yellow);
+                background: transparent;
+            }
+
+                .pixel-btn-lg.yellow:hover {
+                    background: var(--yellow);
+                    color: #000;
+                }
+
+        .confetti-row {
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+            animation: confettiBounce 1s infinite alternate;
+            letter-spacing: 4px;
+        }
+
+        @keyframes confettiBounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* ── TIMER BAR ── */
+        .timer-bar-wrap {
+            margin-bottom: 16px;
+            background: var(--bg3);
+            border: 2px solid var(--grey);
+            height: 10px;
+            position: relative;
+            box-shadow: inset 2px 2px 0 #000;
+        }
+
+        .timer-bar {
+            height: 100%;
+            background: var(--green);
+            transition: width 1s linear, background 0.5s;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+            .timer-bar.warn {
+                background: var(--yellow);
+            }
+
+            .timer-bar.danger {
+                background: var(--pixel);
+            }
+
+        /* ── BEST SCORES ── */
+        .best-scores {
+            margin-top: 40px;
+            border-top: 3px solid var(--grey);
+            padding-top: 24px;
+        }
+
+        .best-title {
+            font-size: 0.55rem;
+            color: var(--yellow);
+            margin-bottom: 16px;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .best-table {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .best-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg2);
+            border: 2px solid var(--grey);
+            padding: 10px 16px;
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .best-diff {
+            font-size: 0.45rem;
+            letter-spacing: 0.1em;
+        }
+
+            .best-diff.easy {
+                color: var(--green);
+            }
+
+            .best-diff.medium {
+                color: var(--yellow);
+            }
+
+            .best-diff.hard {
+                color: var(--pixel);
+            }
+
+        .best-val {
+            font-family: var(--font-score);
+            font-size: 1.4rem;
+            color: var(--cyan);
+        }
+
+            .best-val.none {
+                color: var(--grey);
+                font-size: 1rem;
+            }
+
+        /* ── PAUSE OVERLAY ── */
+        #pauseOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+            #pauseOverlay.show {
+                display: flex;
+            }
+
+        .pause-title {
+            font-size: clamp(1rem, 4vw, 2rem);
+            color: var(--cyan);
+            text-shadow: 4px 4px 0 #007a7a;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .diff-card {
+                width: 160px;
+                padding: 20px 16px;
+            }
+
+            .header-spacer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAUSE OVERLAY -->
+    <div id="pauseOverlay">
+        <div class="pause-title">// PAUSED //</div>
+        <button class="pixel-btn-lg yellow" onclick="togglePause()">▶ RESUME</button>
+        <button class="pixel-btn-lg green" onclick="goHome()">⌂ MENU</button>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <a href="index.html" class="back-btn">◄ BACK</a>
+            <h1 class="game-title">// 8-BIT MEMORY //</h1>
+            <div class="header-spacer"></div>
+        </div>
+    </header>
+
+    <!-- SCOREBOARD -->
+    <div class="scoreboard">
+        <div class="score-box">
+            <span class="score-label">SCORE</span>
+            <span class="score-value yellow" id="scoreDisplay">0</span>
+        </div>
+        <div class="score-box">
+            <span class="score-label">MOVES</span>
+            <span class="score-value cyan" id="movesDisplay">0</span>
+        </div>
+        <div class="score-box">
+            <span class="score-label">PAIRS</span>
+            <span class="score-value green" id="pairsDisplay">0/0</span>
+        </div>
+        <div class="score-box">
+            <span class="score-label">TIME</span>
+            <span class="score-value purple" id="timeDisplay">0:00</span>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- DIFFICULTY SCREEN -->
+        <div id="diffScreen">
+            <div class="pixel-art-row">🕹️ 👾 🎮 👾 🕹️</div>
+            <h2 class="diff-title">SELECT DIFFICULTY</h2>
+            <p class="diff-subtitle">Choose your challenge, player one</p>
+
+            <div class="diff-cards">
+                <div class="diff-card easy" onclick="startGame('easy')">
+                    <span class="diff-icon">😎</span>
+                    <div class="diff-name">EASY</div>
+                    <div class="diff-info">4 × 3 grid<br />12 cards<br />6 pairs<br />⏱ 90 sec</div>
+                </div>
+                <div class="diff-card medium" onclick="startGame('medium')">
+                    <div class="diff-badge">POPULAR</div>
+                    <span class="diff-icon">🔥</span>
+                    <div class="diff-name">MEDIUM</div>
+                    <div class="diff-info">4 × 4 grid<br />16 cards<br />8 pairs<br />⏱ 120 sec</div>
+                </div>
+                <div class="diff-card hard" onclick="startGame('hard')">
+                    <span class="diff-icon">💀</span>
+                    <div class="diff-name">HARD</div>
+                    <div class="diff-info">6 × 4 grid<br />24 cards<br />12 pairs<br />⏱ 150 sec</div>
+                </div>
+            </div>
+
+            <!-- BEST SCORES -->
+            <div class="best-scores">
+                <div class="best-title">🏆 BEST SCORES</div>
+                <div class="best-table">
+                    <div class="best-row">
+                        <span class="best-diff easy">EASY</span>
+                        <span class="best-val" id="bestEasy">---</span>
+                    </div>
+                    <div class="best-row">
+                        <span class="best-diff medium">MEDIUM</span>
+                        <span class="best-val" id="bestMedium">---</span>
+                    </div>
+                    <div class="best-row">
+                        <span class="best-diff hard">HARD</span>
+                        <span class="best-val" id="bestHard">---</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="gameScreen">
+            <div class="game-top-bar">
+                <div class="diff-indicator" id="diffIndicator">EASY</div>
+                <div class="game-btns">
+                    <button class="pixel-btn grey" onclick="togglePause()">⏸ PAUSE</button>
+                    <button class="pixel-btn red" onclick="goHome()">✕ QUIT</button>
+                </div>
+            </div>
+            <div class="timer-bar-wrap">
+                <div class="timer-bar" id="timerBar"></div>
+            </div>
+            <div class="card-grid" id="cardGrid"></div>
+        </div>
+
+        <!-- WIN SCREEN -->
+        <div id="winScreen">
+            <div class="confetti-row">🎉 ⭐ 🏆 ⭐ 🎉</div>
+            <h2 class="win-title">YOU WIN!</h2>
+            <p class="win-sub">Mission complete, player one</p>
+            <div class="win-stars" id="winStars">⭐⭐⭐</div>
+            <div class="win-stats">
+                <div class="win-stat">
+                    <span class="win-stat-val" id="winScore">0</span>
+                    <span class="win-stat-lbl">FINAL SCORE</span>
+                </div>
+                <div class="win-stat">
+                    <span class="win-stat-val" id="winMoves">0</span>
+                    <span class="win-stat-lbl">TOTAL MOVES</span>
+                </div>
+                <div class="win-stat">
+                    <span class="win-stat-val" id="winTime">0:00</span>
+                    <span class="win-stat-lbl">TIME TAKEN</span>
+                </div>
+            </div>
+            <div class="win-actions">
+                <button class="pixel-btn-lg green" onclick="startGame(currentDiff)">↺ PLAY AGAIN</button>
+                <button class="pixel-btn-lg yellow" onclick="goHome()">⌂ MENU</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+/* ═══════════════════════════════════════════
+   8-BIT MEMORY CARD FLIP — GAME LOGIC
+═══════════════════════════════════════════ */
+
+// card emojis with labels
+const CARD_POOL = [
+  { emoji: '👾', label: 'ALIEN'    },
+  { emoji: '🕹️', label: 'JOYSTICK' },
+  { emoji: '🎮', label: 'GAMEPAD'  },
+  { emoji: '💾', label: 'FLOPPY'   },
+  { emoji: '🖥️', label: 'MONITOR'  },
+  { emoji: '👻', label: 'GHOST'    },
+  { emoji: '🍄', label: 'MUSHROOM' },
+  { emoji: '⭐', label: 'STAR'     },
+  { emoji: '💣', label: 'BOMB'     },
+  { emoji: '🔫', label: 'BLASTER'  },
+  { emoji: '🛸', label: 'UFO'      },
+  { emoji: '🤖', label: 'ROBOT'    },
+];
+
+const DIFFICULTY = {
+  easy:   { cols: 4, pairs: 6,  time: 90,  label: 'EASY'   },
+  medium: { cols: 4, pairs: 8,  time: 120, label: 'MEDIUM' },
+  hard:   { cols: 6, pairs: 12, time: 150, label: 'HARD'   },
+};
+
+// state
+let currentDiff   = 'easy';
+let cards         = [];
+let flipped       = [];
+let matched       = 0;
+let moves         = 0;
+let score         = 0;
+let lockBoard     = false;
+let timerInterval = null;
+let timeLeft      = 90;
+let maxTime       = 90;
+let paused        = false;
+let gameActive    = false;
+let bestScores    = { easy: null, medium: null, hard: null };
+
+/* ── UTILS ── */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+/* ── SCREEN HELPERS ── */
+function showScreen(id) {
+  document.getElementById('diffScreen').style.display  = id === 'diff'  ? 'block' : 'none';
+  document.getElementById('gameScreen').style.display  = id === 'game'  ? 'block' : 'none';
+  document.getElementById('winScreen').style.display   = id === 'win'   ? 'block' : 'none';
+}
+
+/* ── START GAME ── */
+function startGame(diff) {
+  currentDiff  = diff;
+  const cfg    = DIFFICULTY[diff];
+  moves        = 0;
+  score        = 0;
+  matched      = 0;
+  flipped      = [];
+  lockBoard    = false;
+  paused       = false;
+  gameActive   = true;
+  timeLeft     = cfg.time;
+  maxTime      = cfg.time;
+
+  updateHUD();
+  document.getElementById('pairsDisplay').textContent = `0/${cfg.pairs}`;
+
+  // difficulty indicator
+  const ind = document.getElementById('diffIndicator');
+  ind.textContent  = cfg.label;
+  ind.className    = `diff-indicator ${diff}`;
+
+  // build card deck
+  const pool = shuffle([...CARD_POOL]).slice(0, cfg.pairs);
+  cards = shuffle([...pool, ...pool].map((c, i) => ({ ...c, id: i })));
+
+  // render grid
+  const grid = document.getElementById('cardGrid');
+  grid.style.gridTemplateColumns = `repeat(${cfg.cols}, 1fr)`;
+
+  // responsive max width
+  const cardSize = Math.min(110, Math.floor((Math.min(window.innerWidth, 900) - 32 - (cfg.cols - 1) * 12) / cfg.cols));
+  grid.style.maxWidth = (cardSize * cfg.cols + (cfg.cols - 1) * 12) + 'px';
+
+  grid.innerHTML = '';
+  cards.forEach((card, idx) => {
+    const el = document.createElement('div');
+    el.className   = 'card';
+    el.dataset.idx = idx;
+    el.innerHTML   = `
+      <div class="card-inner">
+        <div class="card-face card-back">
+          <div class="card-back-pattern">
+            ${Array(9).fill('<span></span>').join('')}
+          </div>
+        </div>
+        <div class="card-face card-front">
+          <span>${card.emoji}</span>
+          <span class="card-label">${card.label}</span>
+        </div>
+      </div>`;
+    el.addEventListener('click', () => onCardClick(el, idx));
+    grid.appendChild(el);
+  });
+
+  // start timer
+  clearInterval(timerInterval);
+  updateTimerBar();
+  timerInterval = setInterval(tick, 1000);
+
+  showScreen('game');
+}
+
+/* ── TIMER ── */
+function tick() {
+  if (paused || !gameActive) return;
+  timeLeft--;
+  updateTimerBar();
+  document.getElementById('timeDisplay').textContent = formatTime(timeLeft);
+  if (timeLeft <= 0) gameOver();
+}
+function updateTimerBar() {
+  const bar = document.getElementById('timerBar');
+  const pct = (timeLeft / maxTime) * 100;
+  bar.style.width = pct + '%';
+  bar.className   = 'timer-bar' + (pct < 25 ? ' danger' : pct < 50 ? ' warn' : '');
+}
+
+/* ── CARD CLICK ── */
+function onCardClick(el, idx) {
+  if (lockBoard || paused || !gameActive) return;
+  if (el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  if (flipped.length === 2) return;
+
+  el.classList.add('flipped');
+  flipped.push({ el, idx });
+
+  if (flipped.length === 2) {
+    moves++;
+    document.getElementById('movesDisplay').textContent = moves;
+    lockBoard = true;
+    checkMatch();
+  }
+}
+
+function checkMatch() {
+  const [a, b] = flipped;
+  const isMatch = cards[a.idx].emoji === cards[b.idx].emoji;
+
+  if (isMatch) {
+    const pts = Math.max(10, Math.floor((timeLeft / maxTime) * 100));
+    score += pts;
+    matched++;
+    a.el.classList.add('matched');
+    b.el.classList.add('matched');
+    flipped   = [];
+    lockBoard = false;
+    updateHUD();
+    const cfg = DIFFICULTY[currentDiff];
+    document.getElementById('pairsDisplay').textContent = `${matched}/${cfg.pairs}`;
+    if (matched === cfg.pairs) setTimeout(winGame, 400);
+  } else {
+    score = Math.max(0, score - 2);
+    updateHUD();
+    setTimeout(() => {
+      a.el.classList.remove('flipped');
+      b.el.classList.remove('flipped');
+      flipped   = [];
+      lockBoard = false;
+    }, 900);
+  }
+}
+
+function updateHUD() {
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('movesDisplay').textContent = moves;
+  document.getElementById('timeDisplay').textContent  = formatTime(timeLeft);
+}
+
+/* ── WIN ── */
+function winGame() {
+  gameActive = false;
+  clearInterval(timerInterval);
+
+  // star rating
+  const cfg     = DIFFICULTY[currentDiff];
+  const perfect = cfg.pairs;
+  const ratio   = perfect / moves;
+  const stars   = ratio >= 0.9 ? '⭐⭐⭐' : ratio >= 0.65 ? '⭐⭐' : '⭐';
+
+  // bonus for time left
+  const timeBonus = timeLeft * 2;
+  const finalScore = score + timeBonus;
+
+  // best score
+  if (!bestScores[currentDiff] || finalScore > bestScores[currentDiff]) {
+    bestScores[currentDiff] = finalScore;
+  }
+
+  document.getElementById('winScore').textContent = finalScore;
+  document.getElementById('winMoves').textContent = moves;
+  document.getElementById('winTime').textContent  = formatTime(maxTime - timeLeft);
+  document.getElementById('winStars').textContent = stars;
+
+  showScreen('win');
+}
+
+/* ── GAME OVER (time up) ── */
+function gameOver() {
+  gameActive = false;
+  clearInterval(timerInterval);
+  lockBoard = true;
+
+  // flash all unmatched cards red briefly then show diff screen
+  document.querySelectorAll('.card:not(.matched)').forEach(c => {
+    c.style.filter = 'brightness(0.3) sepia(1) hue-rotate(300deg)';
+  });
+  setTimeout(() => {
+    alert('⏱ TIME UP! GAME OVER\n\nScore: ' + score + '\nMatched: ' + matched + '/' + DIFFICULTY[currentDiff].pairs);
+    goHome();
+  }, 600);
+}
+
+/* ── PAUSE ── */
+function togglePause() {
+  paused = !paused;
+  const overlay = document.getElementById('pauseOverlay');
+  overlay.classList.toggle('show', paused);
+}
+
+/* ── HOME ── */
+function goHome() {
+  gameActive = false;
+  paused     = false;
+  clearInterval(timerInterval);
+  document.getElementById('pauseOverlay').classList.remove('show');
+  updateBestScoreDisplay();
+  showScreen('diff');
+}
+
+/* ── BEST SCORES DISPLAY ── */
+function updateBestScoreDisplay() {
+  ['easy','medium','hard'].forEach(d => {
+    const el = document.getElementById('best' + d.charAt(0).toUpperCase() + d.slice(1));
+    if (bestScores[d] !== null) {
+      el.textContent = bestScores[d] + ' PTS';
+      el.classList.remove('none');
+    } else {
+      el.textContent = '---';
+      el.classList.add('none');
+    }
+  });
+}
+
+/* ── INIT ── */
+showScreen('diff');
+updateBestScoreDisplay();
+    </script>
+</body>
+</html>
