@@ -159,7 +159,7 @@ const projectData = {
         desc: `Created a localised travel application to help Japanese users navigate Malaysia with ease and confidence. The app features bilingual support, curated attraction guides, local food recommendations, and an offline map mode. Designed with a clean, accessible UI tailored specifically for first-time visitors from Japan.`
     },
     "Virtual Network Lab Setup": {
-        images: ["network1.png", "network2.png", "network6.png", "network4.png", "network5.png"],
+        images: ["network1.png", "network2.png", "network6.png", "network7.png", "network4.png", "network5.png"],
         chips: ["Networking", "Virtualisation", "Lab Environment"],
         desc: `Designed and built virtual lab environments to practise network configuration, troubleshooting, and CCNA-level concepts. Using tools such as Cisco Packet Tracer and VirtualBox, the lab simulates real-world network topologies including VLANs, routing protocols, and firewall configurations to build hands-on networking skills.`
     },
