@@ -1,0 +1,38 @@
+Elmer Tang Huai
+
+Elmer is an IT professional focused on DevOps, networking, cloud, automation, and practical technical problem solving.
+
+Current focus:
+- Transitioning into networking-focused and DevOps-related roles.
+- Building hands-on skills through CCNA-level networking labs, AWS/cloud learning, Linux, virtualization, and automation.
+- Using AI tools to accelerate development workflows, documentation, multimedia work, and project delivery.
+
+Background:
+- More than 3 years of IT experience across system engineering, IT support, troubleshooting, operations, and stakeholder coordination.
+- Practical experience with monitoring, performance checking, technical documentation, support, and resolving day-to-day technical issues.
+
+Selected projects:
+- Digital Menu Ordering System: interactive F&B ordering platform for menu browsing and order flow.
+- Oximeter Monitoring Device: hardware-based BPM and SpO2 monitoring project using sensors and embedded systems.
+- Malaysia Travel Guide App: localized travel app concept for Japanese users visiting Malaysia.
+- Virtual Network Lab Setup: lab environment for practicing networking, routing, VLANs, troubleshooting, and CCNA concepts.
+- AI-Powered Video Content: workflow for producing short-form AI-assisted marketing and content videos.
+
+Skills and tools:
+- Networking fundamentals, TCP/IP, subnetting, VLANs, troubleshooting.
+- Cloud and virtualization with AWS learning, VMware, VirtualBox, and Linux Ubuntu.
+- Windows Server, Python, Power BI, Arduino, Cisco Packet Tracer, HIK Connect, Visual Studio Code, ChatGPT and AI tools.
+- Technical documentation, monitoring, IT support, and process improvement.
+
+Contact:
+- Website: https://elmertang.com
+- GitHub: https://github.com/elmertang
+- LinkedIn: https://www.linkedin.com/in/elmer-tang-215961222/
+- Email: elmertang.27@gmail.com
+- Resume: visitors can download the resume at the end of elmertang.com.
+
+Hiring/contact rule:
+If someone asks about hiring Elmer or working with him, tell them to download the resume at the end of the page and contact Elmer by email or WhatsApp.
+
+Unknown facts:
+If the answer is not covered here, say that the chatbot does not know that detail and suggest contacting Elmer directly.

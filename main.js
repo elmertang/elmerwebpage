@@ -133,7 +133,72 @@ document.addEventListener("DOMContentLoaded", () => {
     initMobileNav();
     initSkillBars();
     initModal();
+    initChatbot();
 });
+
+/* ────────────────────────────────────────────────
+   ASK ELMER CHATBOT
+──────────────────────────────────────────────── */
+const CHAT_API_URL = window.ELMER_CHAT_API_URL || "https://elmerwebpage.vercel.app/api/chat";
+
+function initChatbot() {
+    const widget = document.getElementById("chatWidget");
+    const launcher = document.getElementById("chatLauncher");
+    const panel = document.getElementById("chatPanel");
+    const close = document.getElementById("chatClose");
+    const form = document.getElementById("chatForm");
+    const input = document.getElementById("chatInput");
+    const messages = document.getElementById("chatMessages");
+
+    if (!widget || !launcher || !panel || !close || !form || !input || !messages) return;
+
+    function setOpen(isOpen) {
+        widget.classList.toggle("open", isOpen);
+        panel.setAttribute("aria-hidden", String(!isOpen));
+        if (isOpen) input.focus();
+    }
+
+    function addMessage(text, type) {
+        const bubble = document.createElement("div");
+        bubble.className = `chat-bubble ${type}`;
+        bubble.textContent = text;
+        messages.appendChild(bubble);
+        messages.scrollTop = messages.scrollHeight;
+        return bubble;
+    }
+
+    launcher.addEventListener("click", () => setOpen(true));
+    close.addEventListener("click", () => setOpen(false));
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && widget.classList.contains("open")) setOpen(false);
+    });
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+
+        input.value = "";
+        addMessage(message, "user");
+        const pending = addMessage("· · ·", "bot");
+
+        try {
+            const response = await fetch(CHAT_API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            });
+
+            if (!response.ok) throw new Error("Chat request failed");
+
+            const data = await response.json();
+            pending.textContent = data.reply || "I do not know that detail yet. Please contact Elmer directly.";
+        } catch {
+            pending.textContent = "Can't reach the server right now. Try again in a moment.";
+        }
+    });
+}
 
 /*-──────────────────────────────────────────────-──────────────────────────────────────────────-─────────────────────────── */
 
