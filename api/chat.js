@@ -29,6 +29,11 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("OPENAI_API_KEY is not configured");
+      return res.status(500).json({ error: "Chat service unavailable" });
+    }
+
     const { message } = await readJson(req);
     const cleanMessage = typeof message === "string" ? message.trim() : "";
 
@@ -67,7 +72,11 @@ ${aboutText}
       })
     });
 
-    if (!openaiResponse.ok) throw new Error("OpenAI request failed");
+    if (!openaiResponse.ok) {
+      const errorText = await openaiResponse.text();
+      console.error("OpenAI request failed", openaiResponse.status, errorText.slice(0, 300));
+      throw new Error("OpenAI request failed");
+    }
 
     const data = await openaiResponse.json();
     const reply = data.choices?.[0]?.message?.content?.trim();
